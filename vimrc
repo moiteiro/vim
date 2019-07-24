@@ -1,7 +1,9 @@
 " contents of minimal .vimrc
 execute pathogen#infect()
 syntax on
-color dracula
+color gruvbox
+set background=dark " Setting dark mode for gruvbox theme.
+let g:airline_theme='gruvbox'
 filetype plugin indent on
 
 set backspace=indent,eol,start
