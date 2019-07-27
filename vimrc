@@ -12,6 +12,7 @@ set number relativenumber
 set scrolloff=10
 set tabstop=2
 set laststatus=2
+set wildmenu
 
 map <C-n> :NERDTreeToggle<CR>
 
