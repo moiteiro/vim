@@ -13,14 +13,12 @@ set shell=/bin/bash
 set showcmd
 
 set backspace=indent,eol,start
-set expandtab
 set number relativenumber
 
 " number of lines used as padding
 set scrolloff=10
 
 
-set tabstop=2
 set laststatus=2
 
 " Shows a menu when using tab completion
@@ -72,3 +70,17 @@ if exists("+undofile")
 endif
 
 autocmd FileType ruby compiler ruby
+autocmd FileType ruby setlocal tabstop=2 expandtab
+
+" Quickfix List navigation
+map <C-j> :cn<CR>
+map <C-k> :cp<CR>
+
+" GO
+" executes gofmt govet and golint before the file is saved
+let g:go_metalinter_autosave = 1
+
+" shows the function's signature of which the cursor is under
+let g:go_auto_type_info = 1
+
+autocmd BufNewFile,BufRead *.go set tabstop=4
