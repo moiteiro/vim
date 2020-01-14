@@ -1,3 +1,18 @@
+[submodule "bundle/nerdtree"]
+	path = bundle/nerdtree
+	url = https://github.com/preservim/nerdtree
+[submodule "bundle/lightline.vim"]
+	path = bundle/lightline.vim
+	url = https://github.com/itchyny/lightline.vim
+[submodule "bundle/gruvbox"]
+	path = bundle/gruvbox
+	url = https://github.com/morhetz/gruvbox
+[submodule "bundle/ctrlp.vim"]
+	path = bundle/ctrlp.vim
+	url = https://github.com/rking/ag.vim
+[submodule "bundle/ag.vim"]
+	path = bundle/ag.vim
+	url = https://github.com/kein/ctrlp.vim
 [submodule "bundle/dracula-theme"]
 	path = bundle/dracula-theme
 	url = https://github.com/dracula/vim.git
@@ -7,8 +22,8 @@
 [submodule "bundle/vim-textobj-user"]
 	path = bundle/vim-textobj-user
 	url = https://github.com/kana/vim-textobj-user.git
-[submodule "/home/moiteiro/.vim/bundle/vim-go"]
-	path = /home/moiteiro/.vim/bundle/vim-go
+[submodule "bundle/vim-go"]
+	path = bundle/vim-go
 	url = https://github.com/fatih/vim-go.git
 [submodule "vim-javascript"]
 	path = bundle/vim-javascript
@@ -16,3 +31,6 @@
 [submodule "bundle/tcomment_vim"]
 	path = bundle/tcomment_vim
 	url = https://github.com/tomtom/tcomment_vim.git
+[submodule "bundle/vim-yaml"]
+	path = bundle/vim-yaml
+	url = https://github.com/stephpy/vim-yaml
