@@ -6,6 +6,7 @@ vim.o.number = true
 vim.o.relativenumber = true
 vim.o.scrolloff = 10
 vim.o.backspace=indent,eol,start
+vim.api.nvim_set_option_value("colorcolumn", "101", {})
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
