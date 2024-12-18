@@ -13,19 +13,26 @@ return {
 				ensure_installed = {
 					"lua_ls",
 					"ts_ls",
-          "eslint",
-          "gopls",
+					"eslint",
+					'ruby_lsp',
+					"gopls",
 				},
 			})
 		end,
 	},
 	{
 		"neovim/nvim-lspconfig",
+		lazy = false,
 		config = function()
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local lspconfig = require("lspconfig")
+
 			lspconfig.lua_ls.setup({})
 			lspconfig.ts_ls.setup({})
 			lspconfig.eslint.setup({})
+			lspconfig.ruby_lsp.setup({
+				capabilities = capabilities,
+			})
 			lspconfig.gopls.setup({})
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
