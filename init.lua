@@ -5,11 +5,16 @@ vim.o.softtabstop=2
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.scrolloff = 10
-vim.o.backspace=indent,eol,start
-vim.api.nvim_set_option_value("colorcolumn", "101", {})
+vim.o.backspace='indent,eol,start'
+vim.api.nvim_set_option_value("colorcolumn", "120", {})
+
+-- By default, yank text to clipboard and vice-versa
+vim.opt.clipboard:prepend { 'unnamed', 'unnamedplus' }
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+
+require('keymaps')
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
