@@ -7,8 +7,11 @@ return {
 		dependencies = {
 			"saadparwaiz1/cmp_luasnip",
 			"rafamadriz/friendly-snippets",
+			"mlaursen/vim-react-snippets",
 		},
 		config = function()
+			require("vim-react-snippets").lazy_load()
+
 			local ls = require("luasnip")
 
 			vim.keymap.set({ "i", "s" }, "<Tab>", function()
