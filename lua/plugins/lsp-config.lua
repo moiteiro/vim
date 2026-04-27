@@ -1,101 +1,73 @@
--- DEBUG
--- Entrar no :Mason e verificar se há dependencias para serem atualizadas
+-- Solargraph com erro?
+-- A executção depende de uma gemset específica para cada versão do ruby
+-- 1 - garanta que há um .ruby_version version dentro do projeto com major, minor and bugfix
+-- 2 - crie um novo gemset específico para essa versão do ruby (nesse exemplo 3.3.0) do solargraph: 
+--   rvm use 3.3.0@solargraph --create
+--   gem install solargraph
+--    
+-- 3 - teste com:
+--   solorgraph stdio
 return {
-  {
-    "williamboman/mason.nvim",
-    lazy = false,
-    config = function()
-      require("mason").setup()
-    end,
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    lazy = false,
-    automatic_enable = true,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    lazy = false,
-    config = function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+	{
+		"williamboman/mason.nvim",
+		lazy = false,
+		config = function()
+			require("mason").setup()
+		end,
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+		lazy = false,
+		automatic_enable = true,
+	},
+	{
+		"neovim/nvim-lspconfig",
+		lazy = false,
+		config = function()
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      local lspconfig = require("lspconfig")
-      lspconfig.tailwindcss.setup({
-        capabilities = capabilities
-      })
-      -- havia configurado com ts_ls mas nao estava reconhecendo meu codigo para sugerir no autocomplete.
-      -- se no futuro parar de funcionar, trocar novamente por ts_ls
-      lspconfig.ts_ls.setup({
-        capabilities = capabilities
-      })
-      -- lspconfig.tsserver.setup({
-      --   capabilities = capabilities
-      -- })
-      lspconfig.solargraph.setup({
-        capabilities = capabilities
-      })
-      lspconfig.html.setup({
-        capabilities = capabilities
-      })
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities
-      })
-      lspconfig.gopls.setup({
-        capabilities = capabilities
-      })
+			-- LSPs normais (Mason)
+			local servers = {
+				tailwindcss = {},
+				ts_ls = {},
+				html = {},
+				lua_ls = {},
+				gopls = {},
+			}
 
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-    end,
-  },
+			for server, config in pairs(servers) do
+				config.capabilities = capabilities
+				vim.lsp.config(server, config)
+				vim.lsp.enable(server)
+			end
+
+			local function solargraph_cmd()
+				local ruby_version = "3.3.0"
+
+				local file = io.open(".ruby-version", "r")
+				if file then
+					ruby_version = file:read("*l") or ruby_version
+					file:close()
+				end
+
+				return {
+					"bash",
+					"-lc",
+					"rvm use " .. ruby_version .. "@solargraph do solargraph stdio",
+				}
+			end
+
+			vim.lsp.config("solargraph", {
+				capabilities = capabilities,
+				cmd = solargraph_cmd(),
+			})
+			vim.lsp.enable("solargraph")
+
+			-- Keymaps
+			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+			vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
+			vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
+			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+		end,
+	},
 }
-
-
--- to install new lsp, use :Mason, then select a linter or formmatter that you want
--- return {
--- 	{
--- 		"williamboman/mason.nvim",
--- 		config = function()
--- 			require("mason").setup()
--- 		end,
--- 	},
--- 	{
--- 		"williamboman/mason-lspconfig.nvim",
--- 		lazy = false,
--- 		opts = {
--- 			auto_install = true,
--- 		},
--- 		--config = function()
--- 		--	require("mason-lspconfig").setup({
--- 		--		ensure_installed = {
--- 		--			"lua_ls",
--- 		--			"ts_ls",
--- 		--			--"eslint",
--- 		--			'ruby_lsp',
--- 		--			"gopls",
--- 		--		},
--- 		--	})
--- 		--end,
--- 	},
--- 	{
--- 		"neovim/nvim-lspconfig",
--- 		lazy = false,
--- 		config = function()
--- 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
--- 			local lspconfig = require("lspconfig")
--- 
--- 			lspconfig.lua_ls.setup({})
--- 			lspconfig.ts_ls.setup({})
--- 			--lspconfig.eslint.setup({})
--- 			lspconfig.ruby_lsp.setup({
--- 				capabilities = capabilities,
--- 			})
--- 			lspconfig.gopls.setup({})
--- 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
--- 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
--- 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
--- 		end,
--- 	},
--- }

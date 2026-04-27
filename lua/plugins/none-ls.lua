@@ -15,6 +15,17 @@ return {
 				-- ruby
 				-- NOTE: to make rubocop work with docker, is important to configure gems folders
 				-- accessable for both enviroments: it can be done via volume configuration
+				-- null_ls.builtins.diagnostics.rubocop.with({
+				-- 	command = "bash",
+				-- 	args = { "-lc" ,"bundle exec rubocop --format json --force-exclusion --stdin $FILENAME" },
+				-- 	to_stdin = true,
+				-- }),
+				-- null_ls.builtins.formatting.rubocop.with({
+				-- 	command = "bash",
+				-- 	args = { "-lc" ,"bundle exec rubocop --auto-correct --force-exclusion --stdin $FILENAME" },
+				-- 	to_stdin = true,
+				-- }),
+
 				null_ls.builtins.diagnostics.rubocop.with({
 					command = "bundle",
 					args = { "exec", "rubocop", "--format", "json", "--force-exclusion", "--stdin", "$FILENAME" },
