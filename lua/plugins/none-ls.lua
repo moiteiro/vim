@@ -37,7 +37,7 @@ return {
 					to_stdin = true,
 				}),
 
-				-- javascript
+				-- Prettier: JavaScript, JSON (including JSON5/JSONC), and other supported filetypes
 				null_ls.builtins.formatting.prettier,
 			}
 		})
